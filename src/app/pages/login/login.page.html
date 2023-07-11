@@ -1,0 +1,80 @@
+<ion-content class="ion-padding">
+
+    <div class="ion-margin-bottom ion-text-center">
+    <ion-avatar>
+      <ion-img src="assets/imgs/user.jpg"></ion-img>
+    </ion-avatar>
+    <h2 class="ion-color-primary">Iniciar Sesión</h2>
+  </div>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-list lines="none">
+
+      <div class="ion-margin-bottom">
+        <ion-item color="light">
+          <ion-icon name="mail" slot="start" color="primary"></ion-icon> 
+          <ion-input
+            type="email"
+            name="email"
+            ngModel
+            email
+            #emailCtrl="ngModel"
+            placeholder="Email"
+            required>
+          </ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched" class="ion-text-center">
+          <p class="errorMsg">* Ingresa un correo electronico válido</p>
+        </ion-text>
+      </div>
+
+      <ion-item color="light">
+        <ion-icon name="key" slot="start" color="primary"></ion-icon> 
+        <ion-icon color="primary" slot="end" (click)="changeType()" [name]="type ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+        <ion-input
+          [type]="type ? 'password' : 'text'"
+          name="password"
+          ngModel
+          #passwordCtrl="ngModel"
+          placeholder="Contraseña"
+          required
+          minlength="8">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" class="ion-text-center">
+        <p class="errorMsg">* La contraseña debe tener mínimo 8 caracteres.</p>
+      </ion-text>
+      
+    </ion-list>
+
+    <p class="ion-text-right">
+      <span routerLink="/login/forgot-password">Olvidaste tu contraseña?</span>
+    </p>
+
+    <ion-button 
+      *ngIf="!isLogin" 
+      [disabled]="!f.valid"
+      expand="block" 
+      shape="round" 
+      type="submit" 
+      color="primary">
+      INGRESAR
+    </ion-button>
+
+    <div class="ion-text-center" *ngIf="isLogin">
+      <ion-button 
+        shape="round" color="primary" [disabled]="!f.valid">
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-button>
+    </div>
+    
+  </form>
+
+  <ion-text color="primary" class="ion-text-center" routerLink="/login/signup">
+    <p class="marginTop">
+      No tienes una cuenta?
+      <b>Registrate</b>
+    </p>
+  </ion-text>
+
+</ion-content>

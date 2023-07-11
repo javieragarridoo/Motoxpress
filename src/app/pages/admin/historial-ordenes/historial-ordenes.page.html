@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Historial de Órdenes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Historial de Órdenes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-searchbar [(ngModel)]="searchTerm" placeholder="Buscar órdenes"></ion-searchbar>
+
+  <ion-list>
+    <ng-container *ngIf="isLoading; else ordersListSkeleton">
+      <ion-item lines="none">
+        <ion-label>
+          <ion-text class="ion-text-uppercase"><h4>{{ profile?.name }}</h4></ion-text>
+          <p>{{ profile?.email }}</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading && orders.length === 0">
+      <ion-item lines="none">
+        <ion-label class="ion-text-center">
+          <p>No hay órdenes disponibles</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading && orders.length > 0">
+      <ion-item *ngFor="let order of orders">
+        <!-- Aquí va la información de cada orden -->
+        <ion-label>{{ order.id }}</ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+  <ng-template #ordersListSkeleton>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-item>
+    <ion-item *ngFor="let _ of [1, 2, 3, 4]">
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-item>
+  </ng-template>
+</ion-content>

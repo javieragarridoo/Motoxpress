@@ -1,0 +1,19 @@
+
+<ion-item>
+  <ion-thumbnail slot="start">
+    <img [src]="entrega?.cover ? entrega?.cover : fallbackImage" (error)="onImgError($event)" />
+  </ion-thumbnail>
+  <ion-label class="ion-text-wrap">
+    <ion-text>{{entrega?.nombre}}</ion-text>
+    <p>{{entrega?.desc}}</p>
+    <ion-text><p>₹{{entrega?.precio | number: '0.2-2'}}</p></ion-text>
+  </ion-label>
+  <ion-row *ngIf="!entrega?.cantidad ||entrega?.cantidad <= 0" (click)="quantityPlus()">
+    <ion-text class="add" color="success">AGREGAR</ion-text>
+  </ion-row>
+  <ion-row *ngIf="entrega?.cantidad > 0">
+    <ion-icon color="success" name="remove-outline" (click)="quantityMinus()"></ion-icon>
+    <ion-text class="ion-text-center cantidad" color="success">{{entrega?.cantidad}}</ion-text>
+    <ion-icon color="success" name="add-outline" (click)="quantityPlus()"></ion-icon>
+  </ion-row>
+</ion-item>

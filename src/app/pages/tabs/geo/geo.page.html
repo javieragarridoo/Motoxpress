@@ -1,0 +1,45 @@
+
+<ion-header>
+  <ng-container>
+    <h3>Direccion de entrega: {{direccion_llegada}}</h3>
+  </ng-container> 
+</ion-header>
+
+<ion-content>
+  <div id="map"></div>
+  <ion-row>
+      <ion-col>
+        <ion-button *ngIf="boton_recarga===false" class="sign-btn" expand="block" (click)="marcarRecogida()">Marcar Recogida</ion-button>
+          <ion-button *ngIf="boton_recarga" class="sign-btn" expand="block" (click)="setOpen(true)">Entregar Pedido</ion-button>
+          <ion-modal [isOpen]="isModalOpen">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title>Establecer tarifa</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="setOpen(false)">cerrar</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                  <ion-list>
+                      <ion-item>
+                          <ion-label position="stacked">Iniciar Contador</ion-label>
+                          <ion-button class="go-btn" expand="block" (click)="startTimer()">Iniciar contador</ion-button>
+                          <ion-button class="go-btn" expand="block" (click)="stopTimer()">Detener contador</ion-button>
+                        </ion-item>
+                      <ion-item>
+                          <ion-label position="stacked">Finalizar Pedido</ion-label>
+                          <ion-button class="go-btn" expand="block" (click)="finalizarPedido()">Finalizar</ion-button>
+                        </ion-item>
+                    </ion-list>
+                    <ion-button class="go-btn" expand="full" shape="round" (click)="setOpen(false)">Aceptar</ion-button>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+      </ion-col>
+      <ion-col><ion-button [routerLink]="['/', 'tabs','ver-asignadas'] "class="go-btn" expand="block" (click)="calcularRuta()">Iniciar Ruta</ion-button></ion-col>
+  </ion-row> 
+  <div id="indicaciones"></div>
+
+</ion-content>

@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar direccion de recogida</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+   <form #f1="ngForm" (ngSubmit)="onSubmit(f1)">
+   <ion-button color="primary" size="small" (click)="getID()">TEST</ion-button>
+
+    <ion-list lines="none">
+      <ion-list-header>
+        <ion-label>Detalles de recogida</ion-label>
+      </ion-list-header>
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="person" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="text"
+          name="recogida_nombre"
+          ngModel
+          #recogida_nombre="ngModel"
+          placeholder="Nombre sector de recogida"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!recogida_nombre.valid && recogida_nombre.touched">
+        <p class="errorMsg">* Porfavor, Ingresa nombre</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-textarea
+          type="text"
+          name="descripcion"
+          ngModel
+          #descripcion="ngModel"
+          placeholder="Descripcion">
+        </ion-textarea>
+      </ion-item>  
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-label>Hora de recogida</ion-label>
+        <ion-datetime
+          name="hora_recogida"
+          ngModel
+          #hora_recogida="ngModel"
+          presentation="time"
+          required>
+        </ion-datetime>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!hora_recogida.valid && hora_recogida.touched" class="ion-text-center">
+        <p class="errorMsg">* Selecciona la hora de recogida.</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-label>Hora estimada de entrega</ion-label>
+        <ion-datetime
+          name="hora_entrega"
+          ngModel
+          #hora_entrega="ngModel"
+          presentation="time"
+          required>
+        </ion-datetime>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!hora_entrega.valid && hora_entrega.touched" class="ion-text-center">
+        <p class="errorMsg">* Selecciona la hora de entrega, porfavor.</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-label>Selecciona la comuna</ion-label>
+        <ion-select
+          name="comuna"
+          ngModel
+          #comuna="ngModel"
+          required>
+          <ion-select-option *ngFor="let comuna of comunas" [value]="comuna.uid">{{comuna?.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!comuna.valid && comuna.touched" class="ion-text-center">
+        <p class="errorMsg">* Selecciona comuna.</p>
+      </ion-text>
+
+      <ion-item class="ion-margin-bottom">
+        <ion-label>
+          Direccion
+          <p class="ion-text-wrap" *ngIf="location && location?.lat">{{location?.address}}</p>
+        </ion-label>
+        <ion-button color="primary" size="small" (click)="buscarUbicacion()">Buscar</ion-button>
+      </ion-item>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="cash-outline" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="number"
+          name="price"
+          ngModel
+          #precio="ngModel"
+          placeholder="Precio"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!precio.valid && precio.touched">
+        <p class="errorMsg">* Ingresa precio</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="time-outline" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="number"
+          name="tiempo_entrega"
+          ngModel
+          #tiempo_entrega="ngModel"
+          placeholder="Tiempo de entrega estimado"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!tiempo_entrega.valid && tiempo_entrega.touched">
+        <p class="errorMsg">* Porfavor, ingresa tiempo de entrega estimada</p>
+      </ion-text>
+
+      <ion-item>
+        <h4>Imagen de portada</h4>
+        <input type="file" (change)="preview($event)">
+        <p>
+          <img *ngIf="coverImage" [src]="coverImage">
+        </p>
+      </ion-item>
+
+      <ion-item>
+        <ion-input name="category" [(ngModel)]="category" placeholder="Ingresa nueva categoria" type="text"></ion-input>
+        <ion-toggle mode="md" color="success" name="isSector" [(ngModel)]="isSector"></ion-toggle>
+      </ion-item>
+
+      <ion-button type="button" size="small" (click)="addCategoria()" color="primary">AGREGAR</ion-button>
+      <ion-button type="button" size="small" (click)="clearCategoria()" color="danger">LIMPIAR</ion-button>
+      <p *ngIf="categories?.length > 0">Categorias: {{getArrayAsString(categories)}}</p>      
+      <p *ngIf="sectores?.length > 0">Sectores: {{getArrayAsString(sectores)}}</p>
+
+    </ion-list>
+
+    <ion-button 
+      *ngIf="!isLoading" 
+      [disabled]="!f1.valid"
+      expand="block" 
+      shape="round" 
+      type="submit" 
+      color="primary">
+      Guardar
+    </ion-button>
+
+    <div class="ion-text-center" *ngIf="isLoading">
+      <ion-button 
+        shape="round" 
+        color="primary" 
+        [disabled]="!f1.valid">
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-button>
+    </div>
+    
+  </form>
+
+</ion-content>
+

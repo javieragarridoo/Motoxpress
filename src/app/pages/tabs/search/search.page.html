@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar
+      animated="true"
+      debounce="800"
+      #searchInput
+      (ionChange)="onSearchChange($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <app-loading-recogida *ngIf="isLoading"></app-loading-recogida>
+
+  <app-empty-screen *ngIf="!isLoading && (recogidas?.length == 0 || query?.length == 0)" [model]="model"></app-empty-screen>
+
+  <ion-list *ngIf="!isLoading && recogidas.length > 0">
+    <ion-list-header>
+      <ion-label>
+        <h4>Buscando resultados para "{{query}}"</h4>
+      </ion-label>
+    </ion-list-header>
+    <app-recogida 
+      *ngFor="let recogida of recogidas"
+      [recogida]="recogida"
+      [routerLink]="['/', 'tabs', 'recogidas', recogida.uid]"></app-recogida>
+  </ion-list>
+
+</ion-content>

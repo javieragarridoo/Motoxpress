@@ -1,0 +1,65 @@
+<ion-grid class="borderBottom" *ngIf="isLoading">
+  <ion-item lines="none" class="ion-padding-horizontal dashedBorderBottom">
+    <ion-label>
+      <h1>
+        <ion-skeleton-text style="width: 50%" animated></ion-skeleton-text>
+      </h1>
+      <p>
+        <ion-skeleton-text style="width: 60%" animated></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text style="width: 80%" animated></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+  <ion-row>
+    <ion-col size="4">
+      <ion-label class="ion-text-center">
+        <p><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></p>
+        <p><ion-skeleton-text animated style="width: 35%"></ion-skeleton-text></p>
+      </ion-label>
+    </ion-col>
+    <ion-col size="4">
+      <ion-label class="ion-text-center">
+        <p><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></p>
+        <p><ion-skeleton-text animated style="width: 35%"></ion-skeleton-text></p>
+      </ion-label>
+    </ion-col>
+    <ion-col size="4">
+      <ion-label class="ion-text-center">
+        <p><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></p>
+        <p><ion-skeleton-text animated style="width: 35%"></ion-skeleton-text></p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+  <ion-row class="ion-padding-horizontal dashedBorderBottom">
+    <ion-label>
+      <ion-text *ngIf="data?.sectores"><p>{{getSector(data.sectores)}}</p></ion-text>
+      <p>{{data?.address}}</p>
+    </ion-label>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4">
+      <ion-label class="ion-text-center">
+
+        <ion-text>
+          <p>
+            {{data?.tiempo_entrega}} MINS
+          </p>
+        </ion-text>
+        <p>Tiempo de entrega</p>
+      </ion-label>
+    </ion-col>
+    <ion-col size="4">
+      <ion-label class="ion-text-center">
+        <ion-text>
+          <p>
+            ₹{{data?.precio}}
+          </p>
+        </ion-text>
+        <p>precio</p>
+      </ion-label>
+    </ion-col>
+  </ion-row>

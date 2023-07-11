@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar direccion de entrega</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form #f1="ngForm" (ngSubmit)="onSubmit(f1)">
+    
+    <ion-list lines="none">
+
+      <ion-item>
+        <ion-label>Selecciona dirección de recogida</ion-label>
+        <ion-select
+          (ionChange)="changeRecogida($event)"
+          interface="popover"
+          name="recogida_id"
+          ngModel
+          #recogida_id="ngModel"
+          required>
+          <ion-select-option *ngFor="let recogida of recogidas" [value]="recogida.uid">{{recogida?.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!recogida_id.valid && recogida_id.touched" class="ion-text-center">
+        <p class="errorMsg">* Selecciona recogida</p>
+      </ion-text>
+
+      <div *ngIf="categories?.length > 0">
+        <ion-item>
+          <ion-label>Categoria</ion-label>
+          <ion-select
+            interface="popover"
+            name="category_id"
+            [(ngModel)]="category"
+            #category_id="ngModel"
+            required>
+            <ion-select-option *ngFor="let category of categories" [value]="category.id">{{category?.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="!category.valid && category.touched" class="ion-text-center">
+          <p class="errorMsg">* Selecciona una categoria</p>
+        </ion-text>
+      </div>
+      
+      <ion-item>
+        <ion-icon name="navigate" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="text"
+          name="nombre"
+          ngModel
+          #nombre="ngModel"
+          placeholder="Nombre sector"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!nombre.valid && nombre.touched">
+        <p class="errorMsg">* Ingresa tu nombre</p>
+      </ion-text>
+
+      <ion-item>
+        <ion-textarea
+          type="text"
+          name="descripcion"
+          ngModel
+          #descripcion="ngModel"
+          placeholder="Descripcion">
+        </ion-textarea>
+      </ion-item> 
+
+      <ion-item>
+        <ion-icon name="cash-outline" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="number"
+          name="precio"
+          ngModel
+          #precio="ngModel"
+          placeholder="Precio"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!precio.valid && precio.touched">
+        <p class="errorMsg">* Ingresa el precio</p>
+      </ion-text>
+
+
+      <ion-item>
+        <ion-label>Estado</ion-label>
+        <ion-toggle slot="end" name="estado" [(ngModel)]="estado"></ion-toggle>
+      </ion-item>
+
+      <div class="itemImage" *ngIf="!image || image == ''" (click)="changeImage()">
+        <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+        <p>Selecciona una imagen del lugar de entrega aqui</p>
+      </div>
+      
+      <input type="file" accept="image/jpeg" #filePicker (change)="onFileChosen($event)">
+      
+      <div
+        class="itemImage imageDiv" 
+        *ngIf="image && image != ''" 
+        (click)="changeImage()">
+        <ion-img [src]="image"></ion-img>
+      </div>
+      
+    </ion-list>
+
+    <ion-button 
+      *ngIf="!isLoading" 
+      [disabled]="!f1.valid"
+      expand="block" 
+      shape="round" 
+      type="submit" 
+      color="primary">
+      Guardar
+    </ion-button>
+
+    <div class="ion-text-center" *ngIf="isLoading">
+      <ion-button 
+        shape="round" 
+        color="primary" 
+        [disabled]="!f1.valid">
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-button>
+    </div>
+    
+  </form>
+
+</ion-content>

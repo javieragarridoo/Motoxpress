@@ -1,0 +1,23 @@
+<ion-item lines="none">
+  <ion-thumbnail slot="start">
+    <img [src]="recogida?.cover ? recogida.cover : fallbackImage"  (error)="onImgError($event)" />
+  </ion-thumbnail>
+  <ion-label>
+    <ion-text color="medium">
+      <p class="pStyle">
+        {{getSector(recogida?.sectores)}}
+      </p>
+    </ion-text>
+    <span *ngIf="recogida?.rating > 0">
+      <ion-icon name="star"></ion-icon>
+      {{recogida?.rating}} .
+    </span>
+    {{recogida?.tiempo_entrega}} mins . ₹{{recogida?.precio}} for two
+    <ion-text color="tertiary" *ngIf="recogida?.distancia && recogida?.distancia != 0">
+      <p class="distancia">{{recogida?.distancia | number: '0.0-2'}} kms lejos</p>
+    </ion-text>
+    <ion-text color="tertiary" *ngIf="recogida?.distancia == 0">
+      <p class="distance">A poca distancia</p>
+    </ion-text>
+  </ion-label>
+</ion-item>

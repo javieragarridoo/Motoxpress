@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Panel de control Admin</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="logout()">
+        <ion-icon name="power-outline" color="white" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button class="ion-margin" expand="block" color="primary" routerLink="/admin/add-moto">Agregar Moto</ion-button>
+  <ion-button class="ion-margin" expand="block" color="primary" routerLink="/admin/add-recogida">Agregar  direccion Recogida</ion-button>
+  <ion-button class="ion-margin" expand="block" color="primary" routerLink="/admin/add-menu-entrega">Agregar direccion Entregas</ion-button>
+  <ion-img src="../../../assets/imgs/Logo MOTOXPRESS.png" class="img"></ion-img>
+</ion-content>
+

@@ -1,0 +1,13 @@
+<ion-item>
+  <ion-label class="ion-text-wrap">
+    {{entrega?.nombre}}
+  </ion-label>
+  <ion-row>
+    <ion-icon color="success" name="remove-outline" (click)="quantityMinus()"></ion-icon>
+    <ion-text class="ion-text-center cantidad" color="success">{{entrega?.cantidad}}</ion-text>
+    <ion-icon color="success" name="add-outline" (click)="quantityPlus()"></ion-icon>
+  </ion-row>
+  <ion-text slot="end" color="dark" class="price ion-text-right">
+    ₹{{(entrega?.precio * entrega.cantidad) | number: '0.2-2'}}
+  </ion-text>
+</ion-item>
